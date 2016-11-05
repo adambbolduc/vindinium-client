@@ -15,7 +15,7 @@ public class AdvancedGameState {
     private final GameState.Hero me;
 
     /**
-     * Creates an AdvancedGameState from a GameState
+     * Creates an AdvancedGameState from a MyGameState
      * @param gameState
      */
     public AdvancedGameState(GameState gameState) {
@@ -107,7 +107,7 @@ public class AdvancedGameState {
     }
 
     /**
-     * Creates a new AdvancedGameState by taking he previous AdvancedGameState and updating is using a new GameState
+     * Creates a new AdvancedGameState by taking he previous AdvancedGameState and updating is using a new MyGameState
      * @param oldGameState
      * @param updatedState
      */

@@ -23,10 +23,10 @@ public class BotTestingUtils {
     }
 
     /**
-     * Gets a GameState by reading and parsing a file from a given resource path
+     * Gets a MyGameState by reading and parsing a file from a given resource path
      *
      * @param resourcePath path to a resource within the class path
-     * @return a parsed GameState
+     * @return a parsed MyGameState
      */
     public static GameState getGameState(String resourcePath) throws FileNotFoundException {
         File file = new File(BotTestingUtils.class.getResource(resourcePath).getFile());

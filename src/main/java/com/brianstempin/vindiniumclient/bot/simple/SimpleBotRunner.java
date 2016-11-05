@@ -33,7 +33,7 @@ public class SimpleBotRunner implements Callable<GameState> {
     public SimpleBotRunner(ApiKey apiKey, GenericUrl gameUrl, SimpleBot bot) {
         this.apiKey = apiKey;
         this.gameUrl = gameUrl;
-        this.bot = bot;
+        this.bot = bot;;
     }
 
     @Override
@@ -54,6 +54,7 @@ public class SimpleBotRunner implements Callable<GameState> {
             logger.info("Game URL: {}", gameState.getViewUrl());
 
             // Game loop
+
             while (!gameState.getGame().isFinished() && !gameState.getHero().isCrashed()) {
                 logger.info("Taking turn " + gameState.getGame().getTurn());
                 BotMove direction = bot.move(gameState);

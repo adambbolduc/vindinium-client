@@ -1,28 +1,31 @@
-package com.brianstempin.vindiniumclient.bot.simple;
+package com.brianstempin.vindiniumclient.bot.mybots;
 
 import com.brianstempin.vindiniumclient.bot.BotMove;
-import com.brianstempin.vindiniumclient.bot.mybots.GameMap;
+import com.brianstempin.vindiniumclient.bot.simple.SimpleBot;
 import com.brianstempin.vindiniumclient.dto.GameState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * Example bot
- */
-public class RandomBot implements SimpleBot {
-    private static final Logger logger = LogManager.getLogger(RandomBot.class);
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
-    private void get_child(GameState.Game game) {
-        int size = game.getBoard().getSize();
-        String board = game.getBoard().getTiles();
-        logger.info(size);
-        logger.info(board.length());
-    }
+public class MyBot implements SimpleBot {
+    private static final Logger logger = LogManager.getLogger(MyBot.class);
+    private GameStateFactory gameStateFactory = new GameStateFactory();
 
     @Override
     public BotMove move(GameState gameState) {
-        get_child(gameState.getGame());
-        GameMap map = new GameMap(gameState.getGame().getBoard().getSize(), gameState.getGame().getBoard().getTiles());
+        Instant start = Instant.now();
+
+        BotMove botMove = myMove(gameStateFactory.makeGameState(gameState));
+
+        Instant end = Instant.now();
+
+        logger.info(ChronoUnit.MILLIS.between(start, end));
+        return botMove;
+    }
+
+    private BotMove myMove(MyGameState gameState) {
         int randomNumber = (int)(Math.random() * 4);
         switch(randomNumber) {
             case 1:
@@ -40,7 +43,6 @@ public class RandomBot implements SimpleBot {
 
     @Override
     public void setup() {
-        // No-op
     }
 
     @Override

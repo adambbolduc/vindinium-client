@@ -107,3 +107,6 @@ While it is absolutely an improvement over the `GameState`, it still leaves some
 
 #### Testing
 Testing the decisioners is hard.  Its tedious to go through and set up game scenarios to test each possible outcome of each decisioner.  Right now, the testing is not a good example of how a project should be tested.
+
+## Aknowledgment
+This repository is forked from github.com/bstempi/vindinium-client and is used only for academic purposes.
