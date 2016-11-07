@@ -167,6 +167,7 @@ public class GameState {
 
         }
 
+
         public Hero(int id, String name, String userId, int elo, Position pos, int life, int gold, int mineCount,
                     Position spawnPos, boolean crashed) {
             this.id = id;

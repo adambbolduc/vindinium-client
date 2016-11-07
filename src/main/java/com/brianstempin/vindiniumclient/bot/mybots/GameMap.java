@@ -26,6 +26,10 @@ public class GameMap {
         }
     }
 
+    public Tile getTile(int i, int j) {
+        return tiles.get(i-1).get(j-1);
+    }
+
     @Override
     public String toString() {
         return this.tiles.toString();
@@ -37,14 +41,14 @@ public class GameMap {
                 case '#' :
                     return new ImpassableWoodTile();
                 case '@':
-                    return new HeroTile(Integer.valueOf(string.charAt(1)));
+                    return new HeroTile(Character.getNumericValue(string.charAt(1)));
                 case '[':
                     return new TavernTile();
                 case '$':
                     if (string.charAt(1) == '-') {
                         return new GoldMineTile(0);
                     } else {
-                        return new GoldMineTile(Integer.valueOf(string.charAt(1)));
+                        return new GoldMineTile(Character.getNumericValue(string.charAt(1)));
                     }
                 case ' ':
                     return new FreeTile();
