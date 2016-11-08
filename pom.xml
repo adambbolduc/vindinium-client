@@ -20,6 +20,19 @@
             <version>1.18.0-rc</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.javaslang</groupId>
+            <artifactId>javaslang</artifactId>
+            <version>2.0.4</version>
+        </dependency>
+
         <!-- Logging stuffs -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

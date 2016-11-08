@@ -26,10 +26,6 @@ public class GameMap {
         }
     }
 
-    public Tile getTile(int i, int j) {
-        return tiles.get(i-1).get(j-1);
-    }
-
     @Override
     public String toString() {
         return this.tiles.toString();
@@ -55,6 +51,14 @@ public class GameMap {
                 default:
                     throw new RuntimeException(string);
             }
+        }
+    }
+
+    public boolean canPassOn(Coordinate coordinate) {
+        if(coordinate.x < 0 || coordinate.x >= this.tiles.size() || coordinate.y < 0 || coordinate.y >= this.tiles.get(coordinate.x).size()) {
+            return false;
+        } else {
+            return this.tiles.get(coordinate.x).get(coordinate.y).isPassable();
         }
     }
 

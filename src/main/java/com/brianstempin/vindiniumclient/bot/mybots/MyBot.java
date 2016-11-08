@@ -4,12 +4,12 @@ import com.brianstempin.vindiniumclient.bot.BotMove;
 import com.brianstempin.vindiniumclient.bot.Pair;
 import com.brianstempin.vindiniumclient.bot.simple.SimpleBot;
 import com.brianstempin.vindiniumclient.dto.GameState;
+import javaslang.collection.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 
 public class MyBot implements SimpleBot {
     private static final Logger logger = LogManager.getLogger(MyBot.class);
@@ -28,16 +28,21 @@ public class MyBot implements SimpleBot {
     }
 
     private BotMove myMove(GameState gameState) {
-        Pair<Integer, Integer> heroPosition = new Pair<>(gameState.getHero().getPos().getX(), gameState.getHero().getPos().getY());
-        State state = new State(heroPosition, new ArrayList<>());
+        Coordinate heroPosition = new Coordinate(gameState.getHero().getPos().getX(), gameState.getHero().getPos().getY());
+        State state = new State(new GameMap(gameState.getGame().getBoard().getSize(), gameState.getGame().getBoard().getTiles()), heroPosition, List.empty());
 
         agent.resetMetric();
-        BotMove move = agent.evaluate(state, 7).right.plan.stream().findFirst().orElse(BotMove.STAY);
+        Pair<Double, State> solution = agent.evaluate(state, 8);
 
-        logger.info("We are going : " + move);
+
+
+        logger.info("We are going : " + solution.right.plan);
         logger.info("Agent evaluated " + agent.getMetric() + " times");
 
-        return move;
+        logger.info(state.gameMap);
+        logger.info("I am at : " + state.heroPosition);
+
+        return solution.right.plan.head();
     }
 
     @Override

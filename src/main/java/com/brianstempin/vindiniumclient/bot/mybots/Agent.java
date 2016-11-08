@@ -2,43 +2,43 @@ package com.brianstempin.vindiniumclient.bot.mybots;
 
 import com.brianstempin.vindiniumclient.bot.BotMove;
 import com.brianstempin.vindiniumclient.bot.Pair;
-import com.brianstempin.vindiniumclient.dto.Move;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import javaslang.collection.List;
 
 public class Agent {
     private int metric;
+    private static List<BotMove> ALL_MOVES = List.of(
+            BotMove.EAST,
+            BotMove.WEST,
+            BotMove.NORTH,
+            BotMove.SOUTH,
+            BotMove.STAY
+    );
 
     public Pair<Double, State> evaluate(State state, int maxDepth) {
         metric++;
         if (state.plan.size() > maxDepth) {
             return evaluateApprox(state);
         } else {
-            return findSuccessors(state).stream()
+            return findSuccessors(state)
                     .map(state1 -> evaluate(state1, maxDepth))
                     .sorted((first, second) -> second.left.compareTo(first.left))
-                    .findFirst()
-                    .orElse(new Pair<>(0.0, state));
+                    .head();
         }
     }
 
     private Pair<Double, State> evaluateApprox(State state) {
-        Double score = Double.valueOf(state.heroPosition.right);
-        return new Pair<>(score, state);
+        Double score1 = 1.0 * state.heroPosition.y;
+        Double score2 = 1.0 * state.heroPosition.x;
+        Double score3 = -0.5 * state.plan.count(move -> move != BotMove.STAY);
+        return new Pair<>(score1 + score2 + score3, state);
     }
 
     private List<State> findSuccessors(State state) {
-        State northState = new State(new Pair<>(state.heroPosition.left - 1, state.heroPosition.right), new ArrayList<>(state.plan));
-        northState.plan.add(BotMove.NORTH);
-        State southState = new State(new Pair<>(state.heroPosition.left + 1, state.heroPosition.right), new ArrayList<>(state.plan));
-        southState.plan.add(BotMove.SOUTH);
-        State eastState = new State(new Pair<>(state.heroPosition.left, state.heroPosition.right + 1), new ArrayList<>(state.plan));
-        eastState.plan.add(BotMove.EAST);
-        State westState = new State(new Pair<>(state.heroPosition.left, state.heroPosition.right - 1), new ArrayList<>(state.plan));
-        westState.plan.add(BotMove.WEST);
-        return Arrays.asList(northState, southState, eastState, westState);
+        List<State> movingStates = ALL_MOVES
+                .filter(move -> move == BotMove.STAY || state.gameMap.canPassOn(state.heroPosition.applyMove(move)))
+                .map(move -> new State(state.gameMap, state.heroPosition.applyMove(move), state.plan.append(move)));
+        return movingStates;
     }
 
     public void resetMetric() {

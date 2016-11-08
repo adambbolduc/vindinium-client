@@ -1,16 +1,17 @@
 package com.brianstempin.vindiniumclient.bot.mybots;
 
 import com.brianstempin.vindiniumclient.bot.BotMove;
-import com.brianstempin.vindiniumclient.bot.Pair;
+import javaslang.collection.List;
 
-import java.util.List;
 
 public class State {
 
-    public final Pair<Integer, Integer> heroPosition;
+    public final GameMap gameMap;
+    public final Coordinate heroPosition;
     public final List<BotMove> plan;
 
-    public State(Pair<Integer, Integer> heroPosition, List<BotMove> plan) {
+    public State(GameMap gameMap, Coordinate heroPosition, List<BotMove> plan) {
+        this.gameMap = gameMap;
         this.heroPosition = heroPosition;
         this.plan = plan;
     }
